@@ -18,7 +18,7 @@ namespace TunifyPlatform
             var app = builder.Build();
             app.MapControllers();
             app.MapGet("/", () => "Hello World!");
-
+            //run
             app.Run();
         }
     }
