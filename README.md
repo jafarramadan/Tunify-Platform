@@ -3,5 +3,18 @@ Tunify Platform is a dynamic web application designed to enhance your music expe
 
 The application leverages Entity Framework Core for database management, enabling smooth interactions with your data through well-defined models and relationships. With Tunify, users can create and manage playlists, explore songs and albums, follow artists, and subscribe to various music plans, all within a user-friendly interface.
 
-### ERD :
+# Entity Relationships Overview
+User: Each user can create multiple playlists and subscribe to different music plans.
+
+Playlist: Playlists are collections of songs created by users. Each playlist can contain multiple songs, and each song can be part of multiple playlists (many-to-many relationship through the PlaylistSongs table).
+
+Song: Songs are the core of the music library. Each song belongs to an album and can be part of multiple playlists.
+
+Artist: Artists create songs and albums. Each artist can have multiple albums, and each album belongs to one artist.
+
+Album: Albums are collections of songs by an artist. Each album can contain multiple songs.
+
+Subscription: Subscriptions link users to different service tiers, offering various levels of access to the music library.
+
+# ERD :
 ![ERD](TunifyPlatform/assets/Tunify.png)
