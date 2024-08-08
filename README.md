@@ -18,3 +18,17 @@ Subscription: Subscriptions link users to different service tiers, offering vari
 
 # ERD :
 ![ERD](TunifyPlatform/assets/Tunify.png)
+
+# Explaining the Repository Design Pattern and its benefits
+The Repository Design Pattern is a design pattern that acts as a middle layer between the data access layer and the business logic layer in an application. Its primary purpose is to isolate the data access logic and encapsulate it in a repository, making it easier to manage and maintain and making your application more modular and testable.
+
+### Benefits of Repository Design Pattern
+1) Hide the complexty and details of the data access layer from business logic layer
+
+2) Code becomes easier to maintain and modify
+
+3) Makes the code more testable by isolating the data access layer
+
+4) Making the code resuable accoss diffrent parts of the application
+
+5) Switching the data storage solutions: like sql server or database in memory
