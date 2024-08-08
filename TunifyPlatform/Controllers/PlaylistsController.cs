@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TunifyPlatform.Data;
 using TunifyPlatform.Models;
+using TunifyPlatform.Repositories.interfaces;
 
 namespace TunifyPlatform.Controllers
 {
@@ -14,9 +15,9 @@ namespace TunifyPlatform.Controllers
     [ApiController]
     public class PlaylistsController : ControllerBase
     {
-        private readonly TunifyAppDbContext _context;
+        private readonly IPlaylists _context;
 
-        public PlaylistsController(TunifyAppDbContext context)
+        public PlaylistsController(IPlaylists context)
         {
             _context = context;
         }
@@ -25,60 +26,24 @@ namespace TunifyPlatform.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Playlist>>> GetPlaylist()
         {
-          if (_context.Playlist == null)
-          {
-              return NotFound();
-          }
-            return await _context.Playlist.ToListAsync();
+                return await _context.GetAllPlaylist();
         }
 
         // GET: api/Playlists/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Playlist>> GetPlaylist(int id)
         {
-          if (_context.Playlist == null)
-          {
-              return NotFound();
-          }
-            var playlist = await _context.Playlist.FindAsync(id);
+          return await _context.GetPlaylistsById(id);
 
-            if (playlist == null)
-            {
-                return NotFound();
-            }
-
-            return playlist;
         }
 
         // PUT: api/Playlists/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // To protect from overposting attacks,see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPlaylist(int id, Playlist playlist)
         {
-            if (id != playlist.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(playlist).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PlaylistExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var updatedPlaylist = await _context.UpdatePlaylist(id ,playlist);
+            return Ok(updatedPlaylist);
         }
 
         // POST: api/Playlists
@@ -86,39 +51,17 @@ namespace TunifyPlatform.Controllers
         [HttpPost]
         public async Task<ActionResult<Playlist>> PostPlaylist(Playlist playlist)
         {
-          if (_context.Playlist == null)
-          {
-              return Problem("Entity set 'TunifyAppDbContext.Playlist'  is null.");
-          }
-            _context.Playlist.Add(playlist);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetPlaylist", new { id = playlist.Id }, playlist);
+          return await _context.CreatePlaylist(playlist);
         }
 
         // DELETE: api/Playlists/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlaylist(int id)
         {
-            if (_context.Playlist == null)
-            {
-                return NotFound();
-            }
-            var playlist = await _context.Playlist.FindAsync(id);
-            if (playlist == null)
-            {
-                return NotFound();
-            }
-
-            _context.Playlist.Remove(playlist);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            var deletedPlaylist= await _context.DeletePlaylist(id);
+            return Ok(deletedPlaylist);
         }
 
-        private bool PlaylistExists(int id)
-        {
-            return (_context.Playlist?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        
     }
 }
