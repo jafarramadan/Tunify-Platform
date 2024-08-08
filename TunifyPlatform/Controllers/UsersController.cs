@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TunifyPlatform.Data;
 using TunifyPlatform.Models;
+using TunifyPlatform.Repositories.interfaces;
 
 namespace TunifyPlatform.Controllers
 {
@@ -14,40 +15,25 @@ namespace TunifyPlatform.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly TunifyAppDbContext _context;
+        private readonly IUsers _user;
 
-        public UsersController(TunifyAppDbContext context)
+        public UsersController(IUsers context)
         {
-            _context = context;
+            _user = context;
         }
 
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Users>>> GetUsers()
         {
-          if (_context.Users == null)
-          {
-              return NotFound();
-          }
-            return await _context.Users.ToListAsync();
+            return await _user.GetAllUsers();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Users>> GetUsers(int id)
         {
-          if (_context.Users == null)
-          {
-              return NotFound();
-          }
-            var users = await _context.Users.FindAsync(id);
-
-            if (users == null)
-            {
-                return NotFound();
-            }
-
-            return users;
+            return await _user.GetUsersById(id);
         }
 
         // PUT: api/Users/5
@@ -55,30 +41,8 @@ namespace TunifyPlatform.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsers(int id, Users users)
         {
-            if (id != users.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(users).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UsersExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var updatedUser = await _user.UpdateUser(id, users);
+            return Ok(updatedUser);
         }
 
         // POST: api/Users
@@ -86,39 +50,17 @@ namespace TunifyPlatform.Controllers
         [HttpPost]
         public async Task<ActionResult<Users>> PostUsers(Users users)
         {
-          if (_context.Users == null)
-          {
-              return Problem("Entity set 'TunifyAppDbContext.Users'  is null.");
-          }
-            _context.Users.Add(users);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUsers", new { id = users.Id }, users);
+            return await _user.CreateUser(users);
         }
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsers(int id)
         {
-            if (_context.Users == null)
-            {
-                return NotFound();
-            }
-            var users = await _context.Users.FindAsync(id);
-            if (users == null)
-            {
-                return NotFound();
-            }
-
-            _context.Users.Remove(users);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            var deletedUser = await _user.DeleteUser(id);
+            return Ok(deletedUser);
         }
 
-        private bool UsersExists(int id)
-        {
-            return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+
     }
 }
