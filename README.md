@@ -1,3 +1,4 @@
+### Lab 14 :Tunify Platform
 # Tunify Platform
 Tunify Platform is a dynamic web application designed to enhance your music experience by providing a comprehensive solution for managing and streaming your favorite tunes. Built on .NET Core, Tunify seamlessly integrates with a robust SQL Server database to offer an efficient and scalable platform for music enthusiasts.
 
@@ -33,5 +34,17 @@ The Repository Design Pattern is a design pattern that acts as a middle layer be
 
 5) Switching the data storage solutions: like sql server or database in memory
 
+
+
+### Lab 13: Tunify Platform - Navigation and Routing
 # ERD Output :
 ![c](https://github.com/user-attachments/assets/a6c184ed-9ed6-4a75-b8d2-74d66b37b337)
+
+
+
+### Lab 14 :Tunify Platform - Swagger UI Integration
+
+
+In this lab, Swagger UI was added to the Tunify Platform to automatically generate and visualize the API documentation. This makes it easier for developers to understand, test, and interact with the API endpoints.
+
+
