@@ -21,7 +21,49 @@ namespace TunifyPlatform
             builder.Services.AddScoped<IPlaylists, PlaylistServices>();
             builder.Services.AddScoped<ISongs, SongServices>();
 
+            ////swagger config 
+            //builder.Services.AddSwaggerGen
+            //    (
+            //    option=>
+            //    {
+            //        option.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+            //        {
+            //            Title = "Tunify api doc",
+            //            Version = "v1",
+            //            Description = "Api for managing tunify"
+            //        });
+            //    }
+
+            //    );
+
             var app = builder.Build();
+            ////call swagger services 
+            //app.UseSwagger
+            //    (
+            //    options=>
+            //    {
+            //        options.RouteTemplate = "api/{documentName}/swagger.json";
+            //    }
+            //    );
+            ////call swagger UI
+            //app.UseSwaggerUI
+            //    (
+            //    options=>
+            //    {
+            //        options.SwaggerEndpoint("/api/v1/swagger.json","Tunify Api");
+            //        options.RoutePrefix = "TunifyApi";
+            //    }
+            //    );
+
+
+
+            //=====
+            //app.MapControllerRoute(
+            //    name: "default",
+            //    pattern: "{controller=Home}/{action=Index}/{id?}");
+            //=====
+
+
             app.MapControllers();
             app.MapGet("/", () => "Hello World!");
             //run

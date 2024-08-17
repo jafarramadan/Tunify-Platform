@@ -12,8 +12,8 @@ using TunifyPlatform.Data;
 namespace TunifyPlatform.Migrations
 {
     [DbContext(typeof(TunifyAppDbContext))]
-    [Migration("20240805132840_SeedInitialData")]
-    partial class SeedInitialData
+    [Migration("20240816000239_addNavProps")]
+    partial class addNavProps
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,34 +71,25 @@ namespace TunifyPlatform.Migrations
 
             modelBuilder.Entity("TunifyPlatform.Models.Playlist", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PlaylistId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlaylistId"));
 
                     b.Property<DateTime>("Created_Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("PlaylistId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Playlist_Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PlaylistId");
 
                     b.ToTable("Playlist");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Created_Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2018),
-                            PlaylistId = 1,
-                            Playlist_Name = "Playlist1"
-                        });
                 });
 
             modelBuilder.Entity("TunifyPlatform.Models.PlaylistSongs", b =>
@@ -116,10 +107,6 @@ namespace TunifyPlatform.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PlaylistSongsId");
-
-                    b.HasIndex("PlaylistId");
-
-                    b.HasIndex("SongId");
 
                     b.ToTable("PlaylistSongs");
                 });
@@ -152,17 +139,6 @@ namespace TunifyPlatform.Migrations
                     b.HasKey("SongId");
 
                     b.ToTable("Song");
-
-                    b.HasData(
-                        new
-                        {
-                            SongId = 1,
-                            AlbumId = 1,
-                            ArtistId = 1,
-                            Duration = new TimeSpan(0, 0, 3, 0, 0),
-                            Genre = "aaa",
-                            Title = "Music1"
-                        });
                 });
 
             modelBuilder.Entity("TunifyPlatform.Models.Subscription", b =>
@@ -187,11 +163,11 @@ namespace TunifyPlatform.Migrations
 
             modelBuilder.Entity("TunifyPlatform.Models.Users", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UsersId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UsersId"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -207,44 +183,9 @@ namespace TunifyPlatform.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("UsersId");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 3,
-                            Email = "jafar@gmail.com",
-                            Join_Date = new DateTime(2024, 8, 5, 16, 28, 39, 939, DateTimeKind.Local).AddTicks(1634),
-                            SubscriptionId = 1,
-                            Username = "Jafar"
-                        });
-                });
-
-            modelBuilder.Entity("TunifyPlatform.Models.PlaylistSongs", b =>
-                {
-                    b.HasOne("TunifyPlatform.Models.Playlist", null)
-                        .WithMany("playlistSongs")
-                        .HasForeignKey("PlaylistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TunifyPlatform.Models.Song", null)
-                        .WithMany("playlistSongs")
-                        .HasForeignKey("SongId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TunifyPlatform.Models.Playlist", b =>
-                {
-                    b.Navigation("playlistSongs");
-                });
-
-            modelBuilder.Entity("TunifyPlatform.Models.Song", b =>
-                {
-                    b.Navigation("playlistSongs");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TunifyPlatform.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateMusicTables : Migration
+    public partial class addNavProps : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -44,15 +44,29 @@ namespace TunifyPlatform.Migrations
                 name: "Playlist",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    PlaylistId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PlaylistId = table.Column<int>(type: "int", nullable: false),
+                    UsersId = table.Column<int>(type: "int", nullable: false),
                     Playlist_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created_Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Playlist", x => x.Id);
+                    table.PrimaryKey("PK_Playlist", x => x.PlaylistId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlaylistSongs",
+                columns: table => new
+                {
+                    PlaylistSongsId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PlaylistId = table.Column<int>(type: "int", nullable: false),
+                    SongId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlaylistSongs", x => x.PlaylistSongsId);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,7 +76,10 @@ namespace TunifyPlatform.Migrations
                     SongId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ArtistId = table.Column<int>(type: "int", nullable: false)
+                    ArtistId = table.Column<int>(type: "int", nullable: false),
+                    AlbumId = table.Column<int>(type: "int", nullable: false),
+                    Duration = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Genre = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,40 +101,20 @@ namespace TunifyPlatform.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PlaylistSongs",
+                name: "Users",
                 columns: table => new
                 {
-                    PlaylistSongsId = table.Column<int>(type: "int", nullable: false)
+                    UsersId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PlaylistId = table.Column<int>(type: "int", nullable: false),
-                    SongId = table.Column<int>(type: "int", nullable: false)
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Join_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SubscriptionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlaylistSongs", x => x.PlaylistSongsId);
-                    table.ForeignKey(
-                        name: "FK_PlaylistSongs_Playlist_PlaylistId",
-                        column: x => x.PlaylistId,
-                        principalTable: "Playlist",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PlaylistSongs_Song_SongId",
-                        column: x => x.SongId,
-                        principalTable: "Song",
-                        principalColumn: "SongId",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Users", x => x.UsersId);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PlaylistSongs_PlaylistId",
-                table: "PlaylistSongs",
-                column: "PlaylistId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PlaylistSongs_SongId",
-                table: "PlaylistSongs",
-                column: "SongId");
         }
 
         /// <inheritdoc />
@@ -130,16 +127,19 @@ namespace TunifyPlatform.Migrations
                 name: "Artist");
 
             migrationBuilder.DropTable(
+                name: "Playlist");
+
+            migrationBuilder.DropTable(
                 name: "PlaylistSongs");
+
+            migrationBuilder.DropTable(
+                name: "Song");
 
             migrationBuilder.DropTable(
                 name: "Subscription");
 
             migrationBuilder.DropTable(
-                name: "Playlist");
-
-            migrationBuilder.DropTable(
-                name: "Song");
+                name: "Users");
         }
     }
 }
