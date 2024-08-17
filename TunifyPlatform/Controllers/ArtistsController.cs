@@ -62,6 +62,18 @@ namespace TunifyPlatform.Controllers
             return Ok(deletedArtist);
         }
 
-        
+        [HttpPost("{artistId}/songs/{songId}")]
+        public async Task<Song> AddSongToArtist(int artistId, int songId)
+        {
+            var Song = await _context.AddSongToArtist(artistId, songId);
+            return Song;
+        }
+
+        [HttpGet]
+        [Route("{artistId}/songs")]
+        public async Task<ActionResult<IEnumerable<Song>>> GetAllSongsFromArtistId(int artistId)
+        {
+            return await _context.GetAllsongsFromArtistId(artistId);
+        }
     }
 }
