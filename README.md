@@ -32,3 +32,6 @@ The Repository Design Pattern is a design pattern that acts as a middle layer be
 4) Making the code resuable accoss diffrent parts of the application
 
 5) Switching the data storage solutions: like sql server or database in memory
+
+# ERD Output :
+![c](https://github.com/user-attachments/assets/a6c184ed-9ed6-4a75-b8d2-74d66b37b337)
