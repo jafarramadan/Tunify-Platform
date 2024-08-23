@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
 using TunifyPlatform.Models;
 
 namespace TunifyPlatform.Data
 {
-    public class TunifyAppDbContext : DbContext
+    public class TunifyAppDbContext : IdentityDbContext<ApplicationUser>
     {
 
         public TunifyAppDbContext(DbContextOptions<TunifyAppDbContext> options) : base(options)
