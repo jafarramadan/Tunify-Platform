@@ -53,3 +53,7 @@ In this lab, Swagger UI was added to the Tunify Platform to automatically genera
 
 In this lab, you'll add authentication to the Tunify Platform using ASP.NET Core Identity. You'll configure Identity services, allowing users to register, log in, and log out.
 
+![IOP](https://github.com/user-attachments/assets/5d819923-ec67-4dd3-8570-8d5b453abcef)
+
+
+
