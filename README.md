@@ -48,3 +48,8 @@ The Repository Design Pattern is a design pattern that acts as a middle layer be
 In this lab, Swagger UI was added to the Tunify Platform to automatically generate and visualize the API documentation. This makes it easier for developers to understand, test, and interact with the API endpoints.
 
 
+### Lab 15 :Tunify Platform - Identity 
+
+
+In this lab, you'll add authentication to the Tunify Platform using ASP.NET Core Identity. You'll configure Identity services, allowing users to register, log in, and log out.
+
