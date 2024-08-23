@@ -4,6 +4,8 @@ using System.IO;
 using Microsoft.Extensions.Configuration;
 using TunifyPlatform.Repositories.interfaces;
 using TunifyPlatform.Repositories.Services;
+using Microsoft.AspNetCore.Identity;
+using TunifyPlatform.Models;
 namespace TunifyPlatform
 {
     public class Program
@@ -21,6 +23,13 @@ namespace TunifyPlatform
             builder.Services.AddScoped<IPlaylists, PlaylistServices>();
             builder.Services.AddScoped<ISongs, SongServices>();
 
+            builder.Services.AddScoped<IAccountt,IdentityAccountServices>();
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<TunifyAppDbContext>();
+
+
+
             //swagger config 
             builder.Services.AddSwaggerGen
                 (
@@ -33,10 +42,10 @@ namespace TunifyPlatform
                         Description = "Api for managing tunify"
                     });
                 }
-
                 );
-
             var app = builder.Build();
+            app.UseAuthentication();
+
             //call swagger services 
             app.UseSwagger
                 (
@@ -51,15 +60,14 @@ namespace TunifyPlatform
                 options =>
                 {
                     options.SwaggerEndpoint("/api/v1/swagger.json", "Tunify Api");
-                    options.RoutePrefix = "TunifyApi";
+                    options.RoutePrefix = "";
                 }
                 );
-
-            //=====
-            //app.MapControllerRoute(
-            //    name: "default",
-            //    pattern: "{controller=Home}/{action=Index}/{id?}");
-            //=====
+           //// =====
+           // app.MapControllerRoute(
+           //     name: "default",
+           //     pattern: "{controller=Home}/{action=Index}/{id?}");
+           //// =====
 
             app.MapControllers();
             app.MapGet("/", () => "Hello World!");
