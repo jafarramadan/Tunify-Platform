@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TunifyPlatform.Data;
 
@@ -11,9 +12,11 @@ using TunifyPlatform.Data;
 namespace TunifyPlatform.Migrations
 {
     [DbContext(typeof(TunifyAppDbContext))]
-    partial class TunifyAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240826161159_SeedingRoles")]
+    partial class SeedingRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,36 +91,6 @@ namespace TunifyPlatform.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = -1393440924,
-                            ClaimType = "permission",
-                            ClaimValue = "create",
-                            RoleId = "admin"
-                        },
-                        new
-                        {
-                            Id = 1599777385,
-                            ClaimType = "permission",
-                            ClaimValue = "update",
-                            RoleId = "admin"
-                        },
-                        new
-                        {
-                            Id = 1628660409,
-                            ClaimType = "permission",
-                            ClaimValue = "delete",
-                            RoleId = "admin"
-                        },
-                        new
-                        {
-                            Id = 959871014,
-                            ClaimType = "permission",
-                            ClaimValue = "update",
-                            RoleId = "user"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -143,15 +116,6 @@ namespace TunifyPlatform.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserClaims", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1603047180,
-                            ClaimType = "permission",
-                            ClaimValue = "full_access",
-                            UserId = "admin_user_id"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -189,13 +153,6 @@ namespace TunifyPlatform.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "admin_user_id",
-                            RoleId = "admin"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -321,24 +278,6 @@ namespace TunifyPlatform.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "admin_user_id",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "9de1341d-69ed-481d-86b8-42fbd5412acd",
-                            Email = "admin@example.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@EXAMPLE.COM",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFsJORSASPyY4n6WbVyORhwEOrjannf8C2VDRm+LAvcn4Q/JzwIkY0oyhSaOF52lxA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "85da6fb7-5678-47de-8e91-d921daf73322",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("TunifyPlatform.Models.Artist", b =>
@@ -404,14 +343,14 @@ namespace TunifyPlatform.Migrations
                         new
                         {
                             PlaylistId = 1,
-                            Created_Date = new DateTime(2024, 8, 27, 20, 50, 35, 44, DateTimeKind.Local).AddTicks(3036),
+                            Created_Date = new DateTime(2024, 8, 26, 19, 11, 58, 879, DateTimeKind.Local).AddTicks(9494),
                             Playlist_Name = "Playlist One",
                             UsersId = 1
                         },
                         new
                         {
                             PlaylistId = 2,
-                            Created_Date = new DateTime(2024, 8, 27, 20, 50, 35, 44, DateTimeKind.Local).AddTicks(3038),
+                            Created_Date = new DateTime(2024, 8, 26, 19, 11, 58, 879, DateTimeKind.Local).AddTicks(9496),
                             Playlist_Name = "Playlist Two",
                             UsersId = 2
                         });
@@ -575,7 +514,7 @@ namespace TunifyPlatform.Migrations
                         {
                             UsersId = 1,
                             Email = "user1@example.com",
-                            Join_Date = new DateTime(2024, 8, 27, 20, 50, 35, 44, DateTimeKind.Local).AddTicks(3003),
+                            Join_Date = new DateTime(2024, 8, 26, 19, 11, 58, 879, DateTimeKind.Local).AddTicks(9462),
                             SubscriptionId = 1,
                             Username = "user1"
                         },
@@ -583,7 +522,7 @@ namespace TunifyPlatform.Migrations
                         {
                             UsersId = 2,
                             Email = "user2@example.com",
-                            Join_Date = new DateTime(2024, 8, 27, 20, 50, 35, 44, DateTimeKind.Local).AddTicks(3020),
+                            Join_Date = new DateTime(2024, 8, 26, 19, 11, 58, 879, DateTimeKind.Local).AddTicks(9477),
                             SubscriptionId = 2,
                             Username = "user2"
                         });
