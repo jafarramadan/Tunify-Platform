@@ -56,4 +56,36 @@ In this lab, you'll add authentication to the Tunify Platform using ASP.NET Core
 ![IOP](https://github.com/user-attachments/assets/5d819923-ec67-4dd3-8570-8d5b453abcef)
 
 
+### Lab 16: Tunify Platform - Authorization and Claims
 
+# Setting Up JWT-Based Authentication
+
+1-Install Necessary Packages:
+   Open the NuGet Package Manager and install the Microsoft.AspNetCore.Authentication.JwtBearer package.
+   
+2-Configure JWT Authentication in Program.cs
+
+3-Implement JWT Token Service:
+   Create the JwtTokenService class to handle token creation, validation, and claims.
+   
+4-Update IAccount Interface and IdentityAccountService:
+   Extend the IAccount interface to include a method for generating JWT tokens.
+   Implement the token generation method in the IdentityAccountService.
+   
+5-Modify the AccountController:
+   Update the Login action to generate and return a JWT token upon successful authentication.
+   Ensure the token includes necessary claims like user roles.
+
+# Securing API Endpoints and Managing Roles and Claims
+
+1-Securing API Endpoints:
+   Use the [Authorize] attribute to secure specific API endpoints.
+   Implement role-based and policy-based authorization to restrict access to certain features based on user roles or claims.
+   
+2-Handling Roles and Claims:
+   Define roles and claims in your application and assign them to users as needed.
+   Implement authorization policies in Program.cs to handle these roles and claims effectively.
+   
+3-Seeding Roles and Users:
+   In your TunifyDbContext, override the OnModelCreating method to seed initial roles and a default admin user with appropriate claims.
+   Apply the migration to ensure roles and users are correctly seeded into the database.
