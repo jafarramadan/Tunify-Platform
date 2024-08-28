@@ -58,7 +58,7 @@ In this lab, you'll add authentication to the Tunify Platform using ASP.NET Core
 
 ### Lab 16: Tunify Platform - Authorization and Claims
 
-# Setting Up JWT-Based Authentication
+#### Setting Up JWT-Based Authentication
 
 1-Install Necessary Packages:
    Open the NuGet Package Manager and install the Microsoft.AspNetCore.Authentication.JwtBearer package.
@@ -76,7 +76,7 @@ In this lab, you'll add authentication to the Tunify Platform using ASP.NET Core
    Update the Login action to generate and return a JWT token upon successful authentication.
    Ensure the token includes necessary claims like user roles.
 
-# Securing API Endpoints and Managing Roles and Claims
+#### Securing API Endpoints and Managing Roles and Claims
 
 1-Securing API Endpoints:
    Use the [Authorize] attribute to secure specific API endpoints.
