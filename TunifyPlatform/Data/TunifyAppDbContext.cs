@@ -117,6 +117,76 @@ namespace TunifyPlatform.Data
                 new PlaylistSongs { PlaylistSongsId = 2, PlaylistId = 2, SongId = 2 }
             );
 
+            // Seed roles and claims
+            seedRoles(modelBuilder, "Admin", "create", "update", "delete");
+            seedRoles(modelBuilder, "User", "update");
+
+            // Seed the default admin user
+             seedAdminUser(modelBuilder);
         }
+
+        private void seedRoles(ModelBuilder modelBuilder, string roleName, params string[] permissions)
+        {
+            var role = new IdentityRole
+            {
+                Id = roleName.ToLower(),
+                Name = roleName,
+                NormalizedName = roleName.ToUpper(),
+                ConcurrencyStamp = Guid.Empty.ToString()
+            };
+
+            // add claims for the users
+            // complete
+
+
+            modelBuilder.Entity<IdentityRole>().HasData(role);
+
+            var claims = permissions.Select(permission => new IdentityRoleClaim<string>
+            {
+                Id = Guid.NewGuid().GetHashCode(), // Unique identifier
+                RoleId = role.Id,
+                ClaimType = "permission",
+                ClaimValue = permission
+            });
+
+            modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(claims);
+        }
+        private void seedAdminUser(ModelBuilder modelBuilder)
+        {
+            var adminUser = new ApplicationUser
+            {
+                Id = "admin_user_id",
+                UserName = "admin",
+                NormalizedUserName = "ADMIN",
+                Email = "admin@example.com",
+                NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                EmailConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString("D"),
+                ConcurrencyStamp = Guid.NewGuid().ToString("D"),
+            };
+
+            // Set password for the admin user
+            var passwordHasher = new PasswordHasher<ApplicationUser>();
+            adminUser.PasswordHash = passwordHasher.HashPassword(adminUser, "AdminPassword123!");
+
+            modelBuilder.Entity<ApplicationUser>().HasData(adminUser);
+
+            // Assign the admin role to the admin user
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = "admin",
+                UserId = adminUser.Id
+            });
+
+            // Add any necessary claims to the admin user
+            modelBuilder.Entity<IdentityUserClaim<string>>().HasData(new IdentityUserClaim<string>
+            {
+                Id = Guid.NewGuid().GetHashCode(),
+                UserId = adminUser.Id,
+                ClaimType = "permission",
+                ClaimValue = "full_access"
+            });
+        }
+
     }
 }

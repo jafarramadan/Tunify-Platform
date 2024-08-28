@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TunifyPlatform.Models.DTO;
 using TunifyPlatform.Repositories.interfaces;
+using TunifyPlatform.Repositories.Services;
 
 namespace TunifyPlatform.Controllers
 {
@@ -14,8 +16,10 @@ namespace TunifyPlatform.Controllers
         {
             _accountServices = context;
         }
-
+      //  [Authorize(Roles = "Admin")]
+       
         [HttpPost("Register")]
+
         public async Task<ActionResult<AccountDto>> Register(RegisterdAccountDto registerdAccount)
         {
             var account= await _accountServices.Register(registerdAccount);
@@ -35,10 +39,23 @@ namespace TunifyPlatform.Controllers
             return account;
         }
         [HttpPost("Logout")]
-        
         public async Task<ActionResult<AccountDto>> LogOut(string username)
         {
           var account =  await _accountServices.LogOut(username);
+            return account;
+        }
+        [Authorize(Roles = "Admin,User")]
+        [HttpGet("Profile")]
+        public async Task<ActionResult<AccountDto>> Profile()
+        {
+            return await _accountServices.GetTokens(User);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost("DeleteAccount")]
+
+        public async Task<ActionResult<AccountDto>> DeleteAccount(string username)
+        {
+            var account = await _accountServices.deleteAccount(username);
             return account;
         }
     }

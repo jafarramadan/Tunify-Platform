@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -54,13 +55,13 @@ namespace TunifyPlatform.Controllers
         }
 
         // DELETE: api/Songs/5
+        
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSong(int id)
+        public async Task DeleteSongs(int id)
         {
-            var deletedSong=await _context.DeleteSong(id);
-            return Ok(deletedSong);
+            await _context.DeleteSong(id);
         }
 
-        
+
     }
 }
